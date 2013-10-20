@@ -12,17 +12,18 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author timepath
+ * @author TimePath
  */
 public class Server {
 
     private static final Logger LOG = Logger.getLogger(Server.class.getName());
-    private InetSocketAddress sock;
+    private final InetSocketAddress sock;
+    String name;
 
-    public Server(InetSocketAddress a) {
-        this.sock = a;
-        name = (a.getAddress().getHostAddress() + ":" + a.getPort());
-    }
+        public Server(InetSocketAddress a) {
+            this.sock = a;
+            name = (a.getAddress().getHostAddress() + ":" + a.getPort());
+        }
 
     public void update() throws SteamCondenserException, TimeoutException {
         SourceServer ss = new SourceServer(sock.getAddress(), sock.getPort());
@@ -63,7 +64,6 @@ public class Server {
         LOG.log(Level.FINE, sb.toString());
         this.name = (String) info.get("serverName");
     }
-    String name;
 
     @Override
     public String toString() {

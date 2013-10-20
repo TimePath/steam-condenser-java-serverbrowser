@@ -6,7 +6,8 @@ import java.util.TimerTask;
 
 /**
  *
- * @author timepath
+ * @author TimePath
+ * @param <E>
  */
 public abstract class RateLimitedBuffer<E> {
 
@@ -23,7 +24,7 @@ public abstract class RateLimitedBuffer<E> {
             @Override
             public void run() {
                 int count = Math.min(buf.size(), limit);
-                ArrayList<E> buffer = new ArrayList(count);
+                ArrayList<E> buffer = new ArrayList<E>(count);
                 for (int i = 0; i < count; i++) {
                     buffer.add(buf.get(0));
                     buf.remove(0);

@@ -13,11 +13,17 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author timepath
+ * @author TimePath
  */
 public class StreamingMasterServer extends MasterServerWrapper {
 
     private static final Logger LOG = Logger.getLogger(StreamingMasterServer.class.getName());
+    final int quanta = 50;
+    final int frequency = 5;
+    final int threads = quanta * frequency;
+    final int period = 1000 / frequency;
+    final int limit = quanta / frequency;
+    final ExecutorService service = Executors.newFixedThreadPool(threads);
 
     public StreamingMasterServer(InetAddress address) throws SteamCondenserException {
         super(address);
@@ -34,12 +40,6 @@ public class StreamingMasterServer extends MasterServerWrapper {
     public StreamingMasterServer(String address, Integer port) throws SteamCondenserException {
         super(address, port);
     }
-    final int quanta = 50;
-    final int frequency = 5;
-    final int threads = quanta * frequency;
-    final int period = 1000 / frequency;
-    final int limit = quanta / frequency;
-    final ExecutorService service = Executors.newFixedThreadPool(threads);
 
     public Vector<InetSocketAddress> getServers(byte regionCode, String filter, FriendlyServerListener listener) throws SteamCondenserException, TimeoutException {
         return this.getServers(regionCode, filter, false, listener);

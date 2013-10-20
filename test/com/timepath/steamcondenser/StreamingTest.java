@@ -15,6 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class StreamingTest extends JFrame {
 
     private static final Logger LOG = Logger.getLogger(StreamingTest.class.getName());
@@ -62,6 +63,11 @@ public class StreamingTest extends JFrame {
         public void run() {
             try {
                 FriendlyServerListener sl = new FriendlyServerListener() {
+                    /**
+                     * Set to true to only show servers whose info is resolved
+                     */
+                    boolean requireResolution = true;
+
                     private void add(final ArrayList<Server> buffer) {
                         SwingUtilities.invokeLater(new Runnable() {
                             public void run() {
@@ -74,10 +80,6 @@ public class StreamingTest extends JFrame {
                             }
                         });
                     }
-                    /**
-                     * Set to true to only show servers whose info is resolved
-                     */
-                    boolean requireResolution = true;
 
                     public void found(final ArrayList<Server> buffer) {
                         if (!requireResolution) {

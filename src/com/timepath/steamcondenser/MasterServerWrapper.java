@@ -14,9 +14,10 @@ import java.util.logging.Logger;
 /**
  * Extends MasterServer to allow for event driven applications
  *
- * @author timepath
+ * @author TimePath
  */
 public class MasterServerWrapper extends MasterServer {
+    private static final Logger LOG = Logger.getLogger(MasterServerWrapper.class.getName());
 
     public MasterServerWrapper(InetAddress address) throws SteamCondenserException {
         super(address);
@@ -44,7 +45,7 @@ public class MasterServerWrapper extends MasterServer {
      * @param regionCode
      * @param filter
      * @param force
-     * @param listeners
+     * @param listener
      * @return
      * @throws SteamCondenserException
      * @throws TimeoutException
@@ -66,8 +67,8 @@ public class MasterServerWrapper extends MasterServer {
                         serverStringArray = ((M2A_SERVER_BATCH_Paket) this.socket.getReply()).getServers();
 
                         for (String serverString : serverStringArray) {
-                            hostName = serverString.substring(0, serverString.lastIndexOf(":"));
-                            portNumber = Integer.valueOf(serverString.substring(serverString.lastIndexOf(":") + 1));
+                            hostName = serverString.substring(0, serverString.lastIndexOf(':'));
+                            portNumber = Integer.valueOf(serverString.substring(serverString.lastIndexOf(':') + 1));
 
                             if (!hostName.equals("0.0.0.0") && portNumber != 0) {
                                 InetSocketAddress inets = new InetSocketAddress(hostName, portNumber);
